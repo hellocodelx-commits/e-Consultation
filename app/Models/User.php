@@ -23,6 +23,8 @@ class User extends Authenticatable
 
     public const ROLE_ADMIN = 'admin';
 
+    public const ROLES = [self::ROLE_PATIENT, self::ROLE_STAFF, self::ROLE_ADMIN];
+
     /**
      * Get the attributes that should be cast.
      *
