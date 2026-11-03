@@ -12,11 +12,12 @@ class AdminAppointmentController extends Controller
     {
         $status = $request->query('status');
 
-        $appointments = Appointment::with(['patient', 'staff'])
-            ->when(in_array($status, Appointment::STATUSES, true), fn ($q) => $q->where('status', $status))
-            ->orderByDesc('appointment_date')
-            ->orderByDesc('start_time')
-            ->paginate(15)
+        $appointments = Appointment::query()
+            ->with(['patient', 'staff'])
+            ->when(in_array($status, Appointment::STATUSES, true), fn ($query) => $query->where('status', $status))
+            ->latest('appointment_date')
+            ->latest('start_time')
+            ->paginate(20)
             ->withQueryString();
 
         return view('admin.appointments.index', compact('appointments', 'status'));

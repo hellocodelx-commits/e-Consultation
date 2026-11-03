@@ -9,7 +9,7 @@ class AdminActivityController extends Controller
 {
     public function index(): View
     {
-        $logs = ActivityLog::with('user')->latest()->paginate(20);
+        $logs = ActivityLog::with('user')->latest()->paginate(25);
 
         return view('admin.activity.index', compact('logs'));
     }
