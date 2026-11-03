@@ -1,0 +1,16 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\ActivityLog;
+use Illuminate\View\View;
+
+class AdminActivityController extends Controller
+{
+    public function index(): View
+    {
+        $logs = ActivityLog::with('user')->latest()->paginate(20);
+
+        return view('admin.activity.index', compact('logs'));
+    }
+}

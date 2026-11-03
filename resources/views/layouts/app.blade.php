@@ -25,6 +25,21 @@
         <div class="collapse navbar-collapse" id="mainNav">
             <div class="ms-auto d-flex flex-column flex-md-row gap-2 align-items-md-center py-2 py-md-0">
                 @auth
+                    @php($role = auth()->user()->role)
+                    @if ($role === 'patient')
+                        <a class="nav-link" href="{{ route('professionals.index') }}">Professionals</a>
+                        <a class="nav-link" href="{{ route('patient.appointments.index') }}">My appointments</a>
+                    @elseif ($role === 'staff')
+                        <a class="nav-link" href="{{ route('staff.dashboard') }}">Dashboard</a>
+                        <a class="nav-link" href="{{ route('staff.availability.index') }}">Availability</a>
+                        <a class="nav-link" href="{{ route('staff.appointments.index') }}">Appointments</a>
+                        <a class="nav-link" href="{{ route('staff.profile.edit') }}">My profile</a>
+                    @elseif ($role === 'admin')
+                        <a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a>
+                        <a class="nav-link" href="{{ route('admin.users.index') }}">Users</a>
+                        <a class="nav-link" href="{{ route('admin.appointments.index') }}">Appointments</a>
+                        <a class="nav-link" href="{{ route('admin.activity.index') }}">Activity</a>
+                    @endif
                     <span class="text-secondary small">Signed in as {{ auth()->user()->name }}</span>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf

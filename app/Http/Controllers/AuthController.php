@@ -62,9 +62,13 @@ class AuthController extends Controller
         return redirect()->intended(route('dashboard'));
     }
 
-    public function dashboard(): View
+    public function dashboard(): RedirectResponse
     {
-        return view('dashboard');
+        return match (auth()->user()->role) {
+            User::ROLE_ADMIN => redirect()->route('admin.dashboard'),
+            User::ROLE_STAFF => redirect()->route('staff.dashboard'),
+            default => redirect()->route('patient.appointments.index'),
+        };
     }
 
     public function logout(Request $request): RedirectResponse
